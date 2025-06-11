@@ -8,7 +8,7 @@ export default function AuthenticationPage() {
       {/* Left side - Image */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-gray-50">
         <Image
-          src="/images/fashion-models.png"
+          src="public\image\fashion.png"
           alt="Two elegant women in white outfits"
           fill
           className="object-cover"

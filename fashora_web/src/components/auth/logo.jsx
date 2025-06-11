@@ -1,7 +1,8 @@
+// Option 1: Simple Image Logo
 export default function Logo() {
   return (
     <div className="flex justify-center">
-      <h1 className="text-3xl font-serif italic font-bold text-gray-900">Fasherie</h1>
+      <img src="image\fashora.png" alt="Fashora Logo" className="h-16 w-auto max-w-48 object-contain" />
     </div>
   )
 }

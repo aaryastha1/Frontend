@@ -1,24 +1,279 @@
-<!-- <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fasherie - Authentication</title>
-  <link rel="stylesheet" href="app.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .auth-layout {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f8f9fa;
+    }
+
+    /* Left side - Image */
+    .auth-image-section {
+      flex: 1;
+      position: relative;
+      display: none;
+    }
+
+    .auth-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 40px;
+    }
+
+    .overlay-content {
+      color: white;
+      max-width: 400px;
+    }
+
+    .overlay-content h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: serif;
+    }
+
+    .overlay-content p {
+      font-size: 16px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    /* Right side - Form */
+    .auth-form-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background-color: white;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .brand-name {
+      font-family: serif;
+      font-size: 32px;
+      font-weight: bold;
+      font-style: italic;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .welcome-text {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #b45309;
+      box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.1);
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .remember-me input {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .remember-me label {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 14px;
+      background-color: #b45309;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-bottom: 24px;
+    }
+
+    .submit-button:hover {
+      background-color: #92400e;
+    }
+
+    .divider {
+      position: relative;
+      text-align: center;
+      margin: 24px 0;
+    }
+
+    .divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #e5e5e5;
+    }
+
+    .divider span {
+      position: relative;
+      background-color: white;
+      padding: 0 16px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .social-login {
+      margin-bottom: 24px;
+    }
+
+    .social-text {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .facebook-button,
+    .google-button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .facebook-button {
+      background-color: #1877f2;
+    }
+
+    .facebook-button:hover {
+      background-color: #166fe5;
+      transform: translateY(-1px);
+    }
+
+    .google-button {
+      background-color: #ea4335;
+    }
+
+    .google-button:hover {
+      background-color: #d33828;
+      transform: translateY(-1px);
+    }
+
+    .switch-form {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .switch-button {
+      background: none;
+      border: none;
+      color: #b45309;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .switch-button:hover {
+      color: #92400e;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 768px) {
+      .auth-image-section {
+        display: block;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .auth-layout {
+        flex-direction: column;
+      }
+      
+      .auth-form-section {
+        padding: 20px;
+      }
+      
+      .auth-container {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
@@ -26,10 +281,9 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    // Import components
     const { useState } = React;
 
-    function AuthForm() {
+    function AuthFormWithImage() {
       const [isLogin, setIsLogin] = useState(true);
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
@@ -46,301 +300,125 @@
       };
 
       return (
-        <div className="auth-container">
-          <div className="auth-form">
-            <div className="auth-header">
-              <h1 className="brand-name">Fasherie</h1>
-              <h2 className="welcome-text">Welcome Back!</h2>
+        <div className="auth-layout">
+          {/* Left side - Image */}
+          <div className="auth-image-section">
+            <img 
+              src="image\fashion.png" 
+              alt="Fashion models in elegant white outfits"
+              className="auth-image"
+            />
+            <div className="image-overlay">
+              <div className="overlay-content">
+                <h3>Discover Your Style</h3>
+                <p>Join thousands of fashion enthusiasts who trust Fasherie for their style journey.</p>
+              </div>
             </div>
+          </div>
 
-            <form onSubmit={handleSubmit}>
-              {!isLogin && (
+          {/* Right side - Form */}
+          <div className="auth-form-section">
+            <div className="auth-container">
+              <div className="auth-header">
+               <img
+                src="/image/fashora.png" // must be inside /public/image/
+                alt="Fashora Logo"
+                className="h-16 w-auto object-contain"
+               />
+                <h2 className="welcome-text">Welcome Back!</h2>
+              </div>
+
+              <form onSubmit={handleSubmit}>
+                {!isLogin && (
+                  <div className="form-group">
+                    <label htmlFor="fullName">Full Name</label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      placeholder="Enter your full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                  </div>
+                )}
+
                 <div className="form-group">
-                  <label htmlFor="fullName">Full Name</label>
+                  <label htmlFor="email">{isLogin ? 'Sign In' : 'Email'}</label>
                   <input
-                    type="text"
-                    id="fullName"
-                    placeholder="Enter your full name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    type="email"
+                    id="email"
+                    placeholder={isLogin ? 'Phone / Email' : 'Enter your email'}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
-              )}
 
-              <div className="form-group">
-                <label htmlFor="email">{isLogin ? 'Sign In' : 'Email'}</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder={isLogin ? 'Phone / Email' : 'Enter your email'}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              {isLogin && (
-                <div className="remember-me">
+                <div className="form-group">
                   <input
-                    type="checkbox"
-                    id="remember"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
-                  <label htmlFor="remember">Remember Me</label>
                 </div>
-              )}
 
-              <button type="submit" className="submit-button">
-                {isLogin ? 'Sign In' : 'Create Account'}
-              </button>
+                {isLogin && (
+                  <div className="remember-me">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                    />
+                    <label htmlFor="remember">Remember Me</label>
+                  </div>
+                )}
 
-              <div className="divider">
-                <span>OR</span>
+                <button type="submit" className="submit-button">
+                  {isLogin ? 'Sign In' : 'Create Account'}
+                </button>
+
+                <div className="divider">
+                  <span>OR</span>
+                </div>
+
+                <div className="social-login">
+                  <p className="social-text">Sign in with</p>
+                  <div className="social-buttons">
+                    <button type="button" className="facebook-button">
+                      f
+                    </button>
+                    <button type="button" className="google-button">
+                      G
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+              <div className="switch-form">
+                <p>
+                  {isLogin ? "Don't have an account? " : "Already have an account? "}
+                  <button
+                    type="button"
+                    className="switch-button"
+                    onClick={() => setIsLogin(!isLogin)}
+                  >
+                    {isLogin ? 'Sign Up' : 'Sign In'}
+                  </button>
+                </p>
               </div>
-
-              <div className="social-login">
-                <button type="button" className="facebook-button">
-                  f
-                </button>
-                <button type="button" className="google-button">
-                  G
-                </button>
-              </div>
-            </form>
-
-            <div className="switch-form">
-              <p>
-                {isLogin ? "Don't have an account? " : "Already have an account? "}
-                <button
-                  type="button"
-                  className="switch-button"
-                  onClick={() => setIsLogin(!isLogin)}
-                >
-                  {isLogin ? 'Sign Up' : 'Sign In'}
-                </button>
-              </p>
             </div>
-          </div>
-        </div>
-      );
-    }
-
-    function App() {
-      return (
-        <div className="app">
-          <div className="auth-page">
-            <AuthForm />
           </div>
         </div>
       );
     }
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    root.render(<AuthFormWithImage />);
   </script>
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f5f5f5;
-    }
-
-    .app {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .auth-page {
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .auth-container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .auth-header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .brand-name {
-      font-family: serif;
-      font-size: 28px;
-      font-weight: bold;
-      font-style: italic;
-      color: #1a1a1a;
-      margin-bottom: 8px;
-    }
-
-    .welcome-text {
-      font-size: 20px;
-      font-weight: 600;
-      color: #333;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: #555;
-      margin-bottom: 6px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      transition: border-color 0.2s;
-      box-sizing: border-box;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: #b45309;
-      box-shadow: 0 0 0 2px rgba(180, 83, 9, 0.2);
-    }
-
-    .remember-me {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .remember-me input {
-      margin-right: 8px;
-    }
-
-    .remember-me label {
-      font-size: 14px;
-      color: #555;
-    }
-
-    .submit-button {
-      width: 100%;
-      padding: 12px;
-      background-color: #b45309;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .submit-button:hover {
-      background-color: #92400e;
-    }
-
-    .divider {
-      position: relative;
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .divider::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: #ddd;
-    }
-
-    .divider span {
-      position: relative;
-      background-color: white;
-      padding: 0 10px;
-      color: #777;
-      font-size: 14px;
-    }
-
-    .social-login {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .facebook-button,
-    .google-button {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      color: white;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .facebook-button {
-      background-color: #1877f2;
-    }
-
-    .facebook-button:hover {
-      background-color: #166fe5;
-    }
-
-    .google-button {
-      background-color: #ea4335;
-    }
-
-    .google-button:hover {
-      background-color: #d33828;
-    }
-
-    .switch-form {
-      text-align: center;
-      margin-top: 16px;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .switch-button {
-      background: none;
-      border: none;
-      color: #b45309;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-
-    .switch-button:hover {
-      color: #92400e;
-    }
-  </style>
 </body>
 </html>
-
-
-
