@@ -3,15 +3,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-
-
 function App() {
-
-  
   const [count, setCount] = useState(0)
 
   return (
-    
     <>
       <div>
         <a href="https://vite.dev" target="_blank">
@@ -37,19 +32,7 @@ function App() {
   )
 }
 
+<h1>Hello from Fashora 2025 🎉</h1>
 
-
-import AuthForm from "./auth-form"
-
-function App() {
-  return (
-    <div className="app">
-      <div className="auth-page">
-        <AuthForm />
-      </div>
-    </div>
-  )
-}
 
 export default App
-

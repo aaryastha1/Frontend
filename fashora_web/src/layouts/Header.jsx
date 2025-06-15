@@ -1,42 +1,44 @@
-import Link from "next/link"
+"use client"
 
-export default function Header() {
+import { User } from "lucide-react"
+
+export function Header() {
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-serif italic font-bold text-gray-900">
-          Fasherie
-        </Link>
-        <nav className="hidden md:flex">
-          <ul className="flex space-x-8">
-            <li>
-              <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/collections" className="text-gray-600 hover:text-gray-900 transition-colors">
-                Collections
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">
-                Contact
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="flex items-center space-x-4">
-          <Link href="/auth" className="text-gray-600 hover:text-gray-900 transition-colors">
-            Account
-          </Link>
+    <header className="bg-white shadow-sm border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center">
+              <span className="text-white text-lg font-bold">F</span>
+            </div>
+            <span className="text-pink-700 font-semibold text-xl">Fashora</span>
+          </div>
+
+          {/* Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="/" className="text-gray-600 hover:text-pink-600 transition-colors duration-200">
+              Home
+            </a>
+            <a href="/shop" className="text-gray-600 hover:text-pink-600 transition-colors duration-200">
+              Shop
+            </a>
+            <a href="/about" className="text-gray-600 hover:text-pink-600 transition-colors duration-200">
+              About Us
+            </a>
+            <a href="/contact" className="text-gray-600 hover:text-pink-600 transition-colors duration-200">
+              Contact
+            </a>
+          </nav>
+
+          {/* Mobile Icon / Profile Button */}
+          <div className="md:hidden">
+            <button className="text-gray-600 hover:text-pink-600">
+              <User className="h-6 w-6" />
+            </button>
+          </div>
         </div>
       </div>
     </header>
-  )
+  );
 }

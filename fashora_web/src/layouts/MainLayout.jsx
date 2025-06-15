@@ -1,20 +1,16 @@
-// import React from 'react';
-// import { Link, Outlet } from 'react-router-dom';
+import React from 'react'
+import { Header } from './Header'
+import { Footer } from './Footer'
+import { Outlet } from 'react-router-dom'
 
-// export default function MainLayout() {
-//   return (
-//     <div>
-//       <header>
-//         <h1>Fashora</h1>
-//         <nav>
-//           <Link to="/">Home</Link>
-//           <Link to="/login">Login</Link>
-//           <Link to="/register">Register</Link>
-//         </nav>
-//       </header>
-//       <main>
-//         <Outlet /> {/* Renders Homepage, Login, or Register */}
-//       </main>
-//     </div>
-//   );
-// }
+export default function MainLayout() {
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <Header />
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  )
+}
