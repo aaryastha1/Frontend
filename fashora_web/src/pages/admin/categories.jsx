@@ -7,8 +7,8 @@ const Categories = () => {
   const [categories, setCategories] = useState([
     { id: 1, name: "Dresses" },
     { id: 2, name: "Tops" },
-    { id: 3, name: "Bottoms" },
-    { id: 4, name: "Accessories" },
+    { id: 3, name: "Sweater" },
+    { id: 4, name: "Tees" },
   ]);
 
   const [newCategory, setNewCategory] = useState("");
