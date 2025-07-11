@@ -10,6 +10,7 @@ export default function NormalUserRoute() {
     if (loading) return <>Loading</>
 
     if (!user) return <Navigate to="/login" replace />
+    
     // replace will note save history
 
     if (user.role !== "normal") return <Navigate to="/" replace />

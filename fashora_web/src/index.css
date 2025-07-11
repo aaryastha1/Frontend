@@ -81,3 +81,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+footer{
+  margin-top: 1125px;
+}

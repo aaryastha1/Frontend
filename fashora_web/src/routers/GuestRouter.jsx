@@ -11,5 +11,13 @@ export default function GuestRoute() {
 
     if (user) return <Navigate to="/" />
 
+      if (user) {
+    // Redirect based on user role
+    if (user.role === 'admin') return <Navigate to="/admin/products" />;
+    if (user.role === 'normal') return <Navigate to="/normal/home" />;
+    // Optional: fallback if role is unrecognized
+    return <Navigate to="/" />;
+  }
+
     return <Outlet />
 }

@@ -208,230 +208,105 @@
 // export default Products;
 
 
-import React, { useState } from 'react';
-import { Plus, Search, Filter, Edit, Trash2, Eye, Star, Package, Save } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { FiEye, FiEdit2, FiTrash2, FiMoreVertical, FiStar } from "react-icons/fi";
+import instance from "../../api/api";
 
-const Products = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: 'Dress',
-      category: 'Dresses',
-      price: 1500,
-      status: 'active',
-      image: 'https://i.pinimg.com/736x/15/b1/ef/15b1efc12e40416b09bda0c98af35f8d.jpg',
-    },
-    {
-      id: 2,
-      name: 'Basic Tee',
-      category: 'Tops',
-      price: 900,
-      status: 'active',
-      image: 'https://i.pinimg.com/736x/c3/31/6e/c3316e69c9fdc9d76f86ae15c1bdda37.jpg',
-    },
-    {
-      id: 3,
-      name: 'Premium Sweater',
-      category: 'Sweater',
-      price: 2500,
-      status: 'low_stock',
-      image: 'https://www.knitcroaddict.com/wp-content/uploads/2022/11/Knitted-sweater-pattern-5.png',
-    },
-    {
-      id: 4,
-      name: 'Linen Pant',
-      category: 'Pant',
-      price: 1000,
-      status: 'out_of_stock',
-      image: 'https://i.pinimg.com/736x/bd/f3/25/bdf32500b344f9f36abaf3f5c828b758.jpg',
-    },
-    {
-      id: 5,
-      name: 'Basic Tee',
-      category: 'Tees',
-      price: 1199,
-      status: 'active',
-      image: 'https://i.pinimg.com/736x/8b/9c/6d/8b9c6dc820babcb63656839566caace3.jpg',
-    },
-  ]);
+export default function Products() {
+  const [products, setProducts] = useState([]);
 
-  const [editingId, setEditingId] = useState(null);
-  const [editedName, setEditedName] = useState('');
-  const [editedPrice, setEditedPrice] = useState('');
-
-  const categories = ['all', 'Dresses', 'Pant', 'Sweater', 'Tees'];
-
-  const handleDelete = (id) => {
-    const confirmed = window.confirm('Are you sure you want to delete this product?');
-    if (confirmed) {
-      setProducts(products.filter((p) => p.id !== id));
-    }
-  };
-
-  const startEditing = (product) => {
-    setEditingId(product.id);
-    setEditedName(product.name);
-    setEditedPrice(product.price);
-  };
-
-  const saveEdit = () => {
-    setProducts(
-      products.map((p) =>
-        p.id === editingId ? { ...p, name: editedName, price: editedPrice } : p
-      )
-    );
-    setEditingId(null);
-  };
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'active':
-        return 'bg-green-100 text-green-800';
-      case 'low_stock':
-        return 'bg-orange-100 text-orange-800';
-      case 'out_of_stock':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  useEffect(() => {
+    instance.get("/product")
+      .then(res => {
+        setProducts(res.data.data || []);
+      })
+      .catch(err => {
+        console.error("Failed to fetch products", err);
+      });
+  }, []);
 
   return (
-    <div className="space-y-6 p-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Products</h1>
-          <p className="text-gray-600 mt-1">Manage your fashion inventory and product catalog.</p>
-        </div>
-        <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 flex items-center">
-          <Plus className="h-5 w-5 mr-2" />
-          Add Product
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <div className="flex items-center justify-between mb-6">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="px-4 py-2 border border-gray-300 rounded-lg w-80"
+        />
+        <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+          <span>Filter</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg"
-            />
-          </div>
-          <div className="flex items-center space-x-4">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg"
-            >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat === 'all' ? 'All Categories' : cat}
-                </option>
-              ))}
-            </select>
-            <button className="px-4 py-2 border border-gray-300 rounded-lg flex items-center">
-              <Filter className="h-4 w-4 mr-2" />
-              Filters
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow"
-          >
-            <div className="relative">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="absolute top-2 right-2">
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
-                  {product.status.replace('_', ' ').toUpperCase()}
-                </span>
-              </div>
-            </div>
-            <div className="p-4 space-y-2">
-              {editingId === product.id ? (
-                <>
-                  <input
-                    type="text"
-                    value={editedName}
-                    onChange={(e) => setEditedName(e.target.value)}
-                    className="border px-2 py-1 rounded w-full"
+      <div className="bg-white shadow rounded-xl overflow-x-auto">
+        <table className="min-w-full text-left text-sm">
+          <thead className="bg-gray-100 text-gray-600 font-semibold">
+            <tr>
+              <th className="px-6 py-4">Product</th>
+              <th className="px-6 py-4">Category</th>
+              <th className="px-6 py-4">Price</th>
+              <th className="px-6 py-4">Stock</th>
+              <th className="px-6 py-4">Rating</th>
+              <th className="px-6 py-4">Status</th>
+              <th className="px-6 py-4 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((p, i) => (
+              <tr key={p._id} className="border-t hover:bg-gray-50">
+                <td className="px-6 py-4 flex items-center gap-4">
+                  <img
+                    src={`http://localhost:5000/${p.productImage}`}
+                    alt={p.name}
+                    className="w-10 h-10 object-cover rounded"
                   />
-                  <input
-                    type="number"
-                    value={editedPrice}
-                    onChange={(e) => setEditedPrice(e.target.value)}
-                    className="border px-2 py-1 rounded w-full"
-                  />
-                </>
-              ) : (
-                <>
-                  <h3 className="font-semibold text-lg">{product.name}</h3>
-                  <p className="text-gray-600">{product.category}</p>
-                  <p className="text-xl font-bold text-gray-900">Rs {product.price}</p>
-                </>
-              )}
-
-              <div className="flex items-center justify-between mt-3">
-                {editingId === product.id ? (
-                  <button
-                    onClick={saveEdit}
-                    className="flex items-center bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                  >
-                    <Save className="h-4 w-4 mr-1" />
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => startEditing(product)}
-                    className="flex items-center text-purple-600 hover:underline"
-                  >
-                    <Edit className="h-4 w-4 mr-1" />
-                    Edit
-                  </button>
-                )}
-                <button
-                  onClick={() => handleDelete(product.id)}
-                  className="flex items-center text-red-600 hover:underline"
-                >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+                  <div>
+                    <p className="font-semibold text-gray-800">{p.name}</p>
+                    <p className="text-gray-400 text-xs">PRD-{String(i + 1).padStart(3, "0")}</p>
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">
+                    {p.categoryId?.name}
+                  </span>
+                </td>
+                <td className="px-6 py-4 font-semibold text-gray-800">${p.price}</td>
+                <td className={`px-6 py-4 font-medium ${p.stock === 0 ? 'text-red-500' : p.stock < 10 ? 'text-yellow-500' : 'text-green-600'}`}>
+                  {p.stock ?? 0}
+                </td>
+                <td className="px-6 py-4 flex items-center gap-1">
+                  <FiStar className="text-yellow-400" />
+                  <span>{p.rating ?? "4.5"}</span>
+                </td>
+                <td className="px-6 py-4">
+                  <span className={`text-xs px-3 py-1 rounded-full ${
+                    p.stock === 0 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
+                  }`}>
+                    {p.stock === 0 ? 'out_of_stock' : 'active'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-center relative">
+                  <div className="group relative inline-block">
+                    <FiMoreVertical className="cursor-pointer text-gray-600" />
+                    <div className="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-10 hidden group-hover:block">
+                      <button className="w-full flex items-center px-3 py-2 text-sm hover:bg-gray-100">
+                        <FiEye className="mr-2" /> View
+                      </button>
+                      <button className="w-full flex items-center px-3 py-2 text-sm hover:bg-gray-100">
+                        <FiEdit2 className="mr-2" /> Edit
+                      </button>
+                      <button className="w-full flex items-center px-3 py-2 text-sm text-red-600 hover:bg-gray-100">
+                        <FiTrash2 className="mr-2" /> Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-      {filteredProducts.length === 0 && (
-        <div className="text-center py-12">
-          <Package className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-          <p className="text-gray-600">Try adjusting your search or filter criteria.</p>
-        </div>
-      )}
     </div>
   );
-};
-
-export default Products;
+}
 
