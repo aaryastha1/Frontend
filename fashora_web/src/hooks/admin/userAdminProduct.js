@@ -59,7 +59,7 @@ export const useAdminProduct = () => {
   const [search, setSearch] = useState("");
 
   const query = useQuery({
-    queryKey: ['admin_products', pageNumber, pageSize, search],
+    queryKey: ['admin_product', pageNumber, pageSize, search],
     queryFn: () => getAllProductService({
       page: pageNumber,
       limit: pageSize,

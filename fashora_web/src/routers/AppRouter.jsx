@@ -24,6 +24,7 @@ import CreateCategory from '../pages/admin/CreateCategory';
 import UserManagement from '../pages/admin/UserManagement';
 import ProductContent from '../pages/admin/productContent';
 import ProductTable from '../components/admin/productTable';
+import ProductDetail from '../pages/admin/productDetails';
 
 
 export default function AppRouter() {
@@ -44,7 +45,7 @@ export default function AppRouter() {
           {/* <Route path="/admin" element={<AdminLayout />}> */}
             {/* <Route index element={<Dashboard />} /> */}
             {/* <Route path="dashboard" element={<Dashboard />} /> */}
-            <Route path="products" element={<Products />} />
+            {/* <Route path="products" element={<Products />} /> */}
             <Route path="categories" element={<Categories />} />
             
             {/* Add more admin routes here */}
@@ -70,6 +71,12 @@ export default function AppRouter() {
 
           <Route path='Products' element={<ProductContent />} />
           <Route path='Product' element={<ProductTable />} />
+          <Route path="product/:id" element={<ProductDetail />} />
+
+
+          
+          
+          
 
 
           

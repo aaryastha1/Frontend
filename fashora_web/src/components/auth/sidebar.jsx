@@ -12,7 +12,7 @@ import {
 const Sidebar = () => {
   const navItems = [
     // { name: 'Dashboard', icon: <FaTachometerAlt />, path: '/admin/dashboard' },
-    { name: 'Products', icon: <FaBox />, path: '/admins/products' },
+    { name: 'Products', icon: <FaBox />, path: '/admins/product' },
     { name: 'Categories', icon: <FaList />, path: '/admins/categoryy' },
     { name: 'User', icon: <FaTachometerAlt />, path: '/admins/userss' },
   ];

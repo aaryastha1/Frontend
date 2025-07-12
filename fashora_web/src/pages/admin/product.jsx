@@ -256,7 +256,7 @@ export default function Products() {
               <tr key={p._id} className="border-t hover:bg-gray-50">
                 <td className="px-6 py-4 flex items-center gap-4">
                   <img
-                    src={`http://localhost:5000/${p.productImage}`}
+                    src={`http://localhost:5006/${p.productImage}`}
                     alt={p.name}
                     className="w-10 h-10 object-cover rounded"
                   />

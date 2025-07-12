@@ -37,4 +37,6 @@ export const getAllProductApi = (params) =>
 
 // Get a single product by ID
 export const getOneProductApi = (id) => 
-    axios.get("/admin/products/" + id);
+    axios.get("/admin/product/" + id);
+
+
