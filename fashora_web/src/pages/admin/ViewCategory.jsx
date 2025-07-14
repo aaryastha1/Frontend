@@ -12,11 +12,12 @@ return (
     <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center">
       <h1 className="text-3xl font-extrabold text-indigo-700 mb-4">Category Details</h1>
       <p className="text-lg font-semibold text-gray-700 mb-6">{category.name}</p>
-      <img
-        src={getBackendImageUrl(category.filepath)}
-        alt={category.name}
-        className="w-full h-64 object-cover rounded-xl shadow-md border border-gray-200"
-      />
+     <img
+  src={getBackendImageUrl(category?.filepath, "category")}
+  alt={category.name}
+  className="w-full h-64 object-cover rounded-xl shadow-md border border-gray-200"
+/>
+
     </div>
   </div>
 );

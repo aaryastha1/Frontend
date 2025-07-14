@@ -1,125 +1,204 @@
-// import React from 'react'
-// import { useFormik } from 'formik'
-// import * as Yup from 'yup'
-// import { useCreateProduct } from '../../hooks/admin/userAdminProduct'
+
+
+// import React, { useState } from 'react';
+// import { useCreateProduct } from '../../hooks/admin/userAdminProduct';
+// import { useAdminCategory } from '../../hooks/admin/userAdminCategory';
 
 // export default function CreateProduct() {
-//   const { mutate, isPending, error } = useCreateProduct()
+//   const { categories } = useAdminCategory();
+//   const createProduct = useCreateProduct();
 
-//   const validationSchema = Yup.object({
-//     name: Yup.string().required("Product name is required"),
-//     price: Yup.number()
-//       .typeError("Price must be a number")
-//       .required("Price is required")
-//       .positive("Price must be greater than 0"),
-//     image: Yup.mixed()
-//       .nullable()
-//       .test("fileSize", "Image too large", value => !value || (value && value.size <= 5 * 1024 * 1024)),
-//   })
+//   const [form, setForm] = useState({
+//     name: '',
+//     price: '',
+//     categoryId: '',
+//     image: null,
+//   });
 
-//   const formik = useFormik({
-//     initialValues: {
-//       name: "",
-//       price: "",
-//       image: null,
-//     },
-//     validationSchema,
-//     onSubmit: (values) => {
-//       const formData = new FormData()
-//       formData.append("name", values.name)
-//       formData.append("price", values.price)
-//       if (values.image) formData.append("productImage", values.image)
+//   const handleChange = (e) => {
+//     const { name, value, files } = e.target;
+//     setForm(prev => ({
+//       ...prev,
+//       [name]: files ? files[0] : value,
+//     }));
+//   };
 
-//       mutate(formData, {
-//         onSuccess: () => {
-//           formik.resetForm()
-//           alert("Product added successfully!")
-//         },
-//       })
-//     },
-//   })
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     // Validate all required fields before submitting
+//     if (!form.name || !form.price || !form.categoryId || !form.image) {
+//       alert('Please fill all fields and select an image.');
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append('name', form.name);
+//     formData.append('price', form.price);
+//     formData.append('categoryId', form.categoryId);
+//     formData.append('image', form.image);
+
+//     // IMPORTANT: Replace this with a valid ObjectId string from your DB or auth
+//     formData.append('userId', '64a7a8d20e0a5b1234567890'); 
+
+//     createProduct.mutate(formData);
+//   };
 
 //   return (
-//     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
-//       <div className="w-full max-w-xl bg-white shadow-2xl rounded-3xl p-8">
-//         <h2 className="text-2xl font-bold text-red-500 mb-6 text-center">Add Product</h2>
-
-//         <form onSubmit={formik.handleSubmit} className="space-y-6">
-//           {/* Name */}
-//           <div>
-//             <label className="block text-gray-700 font-medium mb-2">Product Name</label>
-//             <input
-//               name="name"
-//               type="text"
-//               onChange={formik.handleChange}
-//               value={formik.values.name}
-//               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-//             />
-//             {formik.touched.name && formik.errors.name && (
-//               <p className="text-red-500 text-sm mt-1">{formik.errors.name}</p>
-//             )}
-//           </div>
-
-//           {/* Price */}
-//           <div>
-//             <label className="block text-gray-700 font-medium mb-2">Price</label>
-//             <input
-//               name="price"
-//               type="number"
-//               onChange={formik.handleChange}
-//               value={formik.values.price}
-//               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-//             />
-//             {formik.touched.price && formik.errors.price && (
-//               <p className="text-red-500 text-sm mt-1">{formik.errors.price}</p>
-//             )}
-//           </div>
-
-//           {/* Image Upload */}
-//           <div>
-//             <label className="block text-gray-700 font-medium mb-2">Product Image</label>
-//             <input
-//               name="image"
-//               type="file"
-//               accept="image/*"
-//               onChange={(e) => {
-//                 const file = e.currentTarget.files[0]
-//                 if (file) formik.setFieldValue("image", file)
-//               }}
-//               className="w-full bg-white px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-//             />
-//             {formik.touched.image && formik.errors.image && (
-//               <p className="text-red-500 text-sm mt-1">{formik.errors.image}</p>
-//             )}
-//           </div>
-
-//           {/* Image Preview */}
-//           {formik.values.image && (
-//             <div className="mt-4">
-//               <p className="text-gray-600 mb-2 font-medium">Image Preview:</p>
-//               <img
-//                 className="w-32 h-32 object-cover rounded-xl border shadow"
-//                 src={URL.createObjectURL(formik.values.image)}
-//                 alt="Preview"
-//               />
-//             </div>
-//           )}
-
-//           {/* Submit Button */}
-//           <div className="pt-4">
-//             <button
-//               type="submit"
-//               disabled={isPending}
-//               className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition duration-200 shadow-md"
-//             >
-//               {isPending ? "Submitting..." : "Create Product"}
-//             </button>
-//           </div>
-
-//           {error && <p className="text-red-600 text-sm">{error.message}</p>}
-//         </form>
-//       </div>
+//     <div className="p-6 max-w-2xl mx-auto bg-white shadow-md rounded-xl">
+//       <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
+//       <form onSubmit={handleSubmit} className="space-y-4">
+//         <input
+//           type="text"
+//           name="name"
+//           placeholder="Product Name"
+//           className="w-full border p-2 rounded"
+//           onChange={handleChange}
+//           required
+//         />
+//         <input
+//           type="number"
+//           name="price"
+//           placeholder="Price"
+//           className="w-full border p-2 rounded"
+//           onChange={handleChange}
+//           required
+//         />
+//         <select
+//           name="categoryId"
+//           className="w-full border p-2 rounded"
+//           onChange={handleChange}
+//           required
+//           defaultValue=""
+//         >
+//           <option value="" disabled>Select Category</option>
+//           {categories.map(cat => (
+//             <option key={cat._id} value={cat._id}>{cat.name}</option>
+//           ))}
+//         </select>
+//         <input
+//           type="file"
+//           name="image"
+//           className="w-full border p-2 rounded"
+//           onChange={handleChange}
+//           accept="image/*"
+//           required
+//         />
+//         <button
+//           type="submit"
+//           className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-5 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600"
+//         >
+//           Create Product
+//         </button>
+//       </form>
 //     </div>
-//   )
+//   );
 // }
 
+import React, { useState } from 'react';
+import { useCreateProduct } from '../../hooks/admin/userAdminProduct';
+import { useAdminCategory } from '../../hooks/admin/userAdminCategory';
+
+export default function CreateProduct() {
+  const { categories } = useAdminCategory();
+  const createProduct = useCreateProduct();
+
+  const [form, setForm] = useState({
+    name: '',
+    price: '',
+    categoryId: '',
+    image: null,
+    description: '',   // Added description here
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setForm(prev => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validate all required fields before submitting
+    if (!form.name || !form.price || !form.categoryId || !form.image) {
+      alert('Please fill all required fields and select an image.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', form.name);
+    formData.append('price', form.price);
+    formData.append('categoryId', form.categoryId);
+    formData.append('image', form.image);
+    formData.append('description', form.description);  // Append description
+
+    // IMPORTANT: Replace this with a valid ObjectId string from your DB or auth
+    formData.append('userId', '64a7a8d20e0a5b1234567890');
+
+    createProduct.mutate(formData);
+  };
+
+  return (
+    <div className="p-6 max-w-2xl mx-auto bg-white shadow-md rounded-xl">
+      <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          name="name"
+          placeholder="Product Name"
+          className="w-full border p-2 rounded"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          className="w-full border p-2 rounded"
+          onChange={handleChange}
+          required
+        />
+        <select
+          name="categoryId"
+          className="w-full border p-2 rounded"
+          onChange={handleChange}
+          required
+          defaultValue=""
+        >
+          <option value="" disabled>Select Category</option>
+          {categories.map(cat => (
+            <option key={cat._id} value={cat._id}>{cat.name}</option>
+          ))}
+        </select>
+
+        {/* Description */}
+        <textarea
+          name="description"
+          placeholder="Product Description"
+          className="w-full border p-2 rounded"
+          onChange={handleChange}
+          value={form.description}
+          rows={4}
+        />
+
+        <input
+          type="file"
+          name="image"
+          className="w-full border p-2 rounded"
+          onChange={handleChange}
+          accept="image/*"
+          required
+        />
+        <button
+          type="submit"
+          className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-5 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600"
+        >
+          Create Product
+        </button>
+      </form>
+    </div>
+  );
+}

@@ -25,6 +25,12 @@ import UserManagement from '../pages/admin/UserManagement';
 import ProductContent from '../pages/admin/productContent';
 import ProductTable from '../components/admin/productTable';
 import ProductDetail from '../pages/admin/productDetails';
+import CreateProduct from '../pages/admin/CreateProduct';
+import UpdateProduct from '../pages/admin/UpdateProduct';
+import CategoryProductPage from '../pages/Categoryproduct';
+
+
+
 
 
 export default function AppRouter() {
@@ -39,6 +45,14 @@ export default function AppRouter() {
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<HomePage />} />
             <Route path="/home" element={<Homepage />} />
+
+              {/* Category route */}
+         <Route path="/category/:categoryName" element={<CategoryProductPage />} />
+
+            
+         
+
+
           </Route>
 
           {/* Admin routes inside AdminLayout */}
@@ -72,6 +86,16 @@ export default function AppRouter() {
           <Route path='Products' element={<ProductContent />} />
           <Route path='Product' element={<ProductTable />} />
           <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="product/create" element={<CreateProduct />} />
+          <Route path="product/:id/edit" element={<UpdateProduct />} />
+        
+
+          
+
+       
+
+          
+          
 
 
           

@@ -125,7 +125,9 @@ export default function CategoryTable() {
   const { categories, error, isPending } = useAdminCategory();
   const deleteCategoryHook = useDeleteOneCategory();
   const [deleteId, setDeleteId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
+  // Delete handler
   const handleDelete = () => {
     deleteCategoryHook.mutate(deleteId, {
       onSuccess: () => {
@@ -133,6 +135,13 @@ export default function CategoryTable() {
       },
     });
   };
+
+  // Filter categories based on search term (case-insensitive)
+  const filteredCategories = searchTerm
+    ? categories.filter(category =>
+        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : categories;
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -155,6 +164,8 @@ export default function CategoryTable() {
         <input
           type="text"
           placeholder="Search categories..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
           className="px-4 py-2 border rounded-xl w-1/3 shadow-sm focus:outline-none focus:ring"
         />
         <button className="px-4 py-2 border rounded-xl text-sm text-gray-700 flex items-center gap-2 shadow-sm">
@@ -170,23 +181,26 @@ export default function CategoryTable() {
         </Link>
       </div>
 
+      {error && <div className="text-red-500 mb-4">{error.message || 'Error loading categories.'}</div>}
+      {isPending && <div>Loading categories...</div>}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {categories.length === 0 && (
+        {filteredCategories.length === 0 && (
           <div className="col-span-full text-center text-gray-500 py-10">
             No categories found.
           </div>
         )}
 
-        {categories.map((category) => (
+        {filteredCategories.map((category) => (
           <div
             key={category._id}
             className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-transform transform hover:scale-[1.01] relative"
           >
-            <img
-              src={getBackendImageUrl(category.filepath)}
-              alt={category.name}
-              className="h-40 w-full object-cover"
-            />
+                <img
+        src={getBackendImageUrl(category.filepath, "category")} // for category
+        alt={category.name}
+        className="h-40 w-full object-cover"
+      />
 
             <div
               className={`absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full shadow-sm ${
@@ -198,12 +212,6 @@ export default function CategoryTable() {
 
             <div className="p-4">
               <h3 className="font-bold text-lg text-gray-800 mb-1">{category.name}</h3>
-              {/* <p className="text-gray-500 text-sm mb-3">{category.description || 'No description available'}</p> */}
-
-              <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                {/* <span>{category.totalItems || 0} items</span> */}
-                {/* <span>{new Date(category.createdAt).toLocaleDateString()}</span> */}
-              </div>
 
               <div className="flex gap-2">
                 <Link to={`/admins/categoryy/${category._id}`}>

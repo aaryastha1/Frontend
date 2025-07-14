@@ -255,11 +255,11 @@ export default function Products() {
             {products.map((p, i) => (
               <tr key={p._id} className="border-t hover:bg-gray-50">
                 <td className="px-6 py-4 flex items-center gap-4">
-                  <img
+                  {/* <img
                     src={`http://localhost:5006/${p.productImage}`}
                     alt={p.name}
                     className="w-10 h-10 object-cover rounded"
-                  />
+                  /> */}
                   <div>
                     <p className="font-semibold text-gray-800">{p.name}</p>
                     <p className="text-gray-400 text-xs">PRD-{String(i + 1).padStart(3, "0")}</p>

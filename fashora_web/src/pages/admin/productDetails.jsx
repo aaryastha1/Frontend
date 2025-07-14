@@ -1,81 +1,92 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import axios from '../../api/api'
-import { getBackendImageUrl } from '../../utilis/backendImage'
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from '../../api/api';
+import { getBackendImageUrl } from '../../utilis/backendImage';
+import { FaEdit, FaTrash, FaArrowLeft } from 'react-icons/fa';
 
 export default function ProductDetail() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const [product, setProduct] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`/admins/product/${id}`) // ✅ FIXED HERE
-        setProduct(res.data.data)
+        const res = await axios.get(`/admin/product/${id}`);
+        setProduct(res.data.data);
       } catch (err) {
-        setError(err?.response?.data?.message || 'Error fetching product')
+        setError(err?.response?.data?.message || 'Error fetching product');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchProduct()
-  }, [id])
+    };
+
+    fetchProduct();
+  }, [id]);
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`/admins/product/${id}`)
-        alert('Deleted successfully')
-        navigate('/admins/product') // ✅ FIXED HERE
-      } catch (err) {
-        alert('Failed to delete the product.')
+        await axios.delete(`/admin/product/${id}`);
+        alert('Deleted successfully');
+        navigate('/admins/product');
+      } catch {
+        alert('Failed to delete the product.');
       }
     }
-  }
+  };
 
-  const handleEdit = () => navigate(`/admins/product/${id}/edit`)
+  const handleEdit = () => navigate(`/admins/product/${id}/edit`);
 
-  if (loading) return <div className="p-6">Loading...</div>
-  if (error) return <div className="p-6 text-red-500">{error}</div>
+  if (loading) return <div className="p-6 text-center">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500 text-center">{error}</div>;
 
   return product ? (
-    <div className="p-6 max-w-3xl mx-auto bg-white shadow rounded-lg">
-      <img
-        src={getBackendImageUrl(product.image)}
-        alt={product.name}
-        className="w-full h-64 object-cover rounded mb-4"
-      />
-      <h1 className="text-2xl font-bold mb-2 text-[#222740]">{product.name}</h1>
-      <p className="text-gray-600 mb-2"><strong>Price:</strong> Rs {product.price}</p>
-      <p className="text-gray-600 mb-2"><strong>Stock:</strong> {product.stock}</p>
-      <p className="text-gray-600 mb-2"><strong>Category:</strong> {product.categoryId?.name || 'N/A'}</p>
-      <p className="text-gray-600 mb-4"><strong>Description:</strong> {product.description || 'No description'}</p>
+    <div className="min-h-screen flex justify-center items-center p-6 bg-indigo-50">
+      <div className="max-w-sm w-full bg-white rounded-xl shadow-md overflow-hidden p-5">
+        <img
+          src={getBackendImageUrl(product.image)}
+          alt={product.name}
+          className="w-full h-64 object-cover rounded-xl shadow-md border border-gray-200"
+        />
+        <h2 className="text-xl font-semibold text-gray-800 mb-2 truncate">{product.name}</h2>
 
-      <div className="flex gap-4">
-        <button
-          onClick={handleEdit}
-          className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-        >
-          Edit
-        </button>
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-        >
-          Delete
-        </button>
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded"
-        >
-          Back
-        </button>
+        <div className="text-gray-600 text-sm space-y-1">
+          <p><span className="font-medium">Price:</span> Rs {product.price}</p>
+          <p><span className="font-medium">Stock:</span> {product.stock}</p>
+          <p><span className="font-medium">Category:</span> {product.categoryId?.name || 'N/A'}</p>
+          {product.description && (
+            <p className="mt-2 text-gray-500 truncate" title={product.description}>
+              <span className="font-medium">Description:</span> {product.description}
+            </p>
+          )}
+        </div>
+
+        <div className="flex justify-between mt-5">
+          <button
+            onClick={handleEdit}
+            className="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1.5 rounded-lg flex items-center gap-1 text-sm"
+          >
+            <FaEdit /> Edit
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1.5 rounded-lg flex items-center gap-1 text-sm"
+          >
+            <FaTrash /> Delete
+          </button>
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1.5 rounded-lg flex items-center gap-1 text-sm"
+          >
+            <FaArrowLeft /> Back
+          </button>
+        </div>
       </div>
     </div>
   ) : (
-    <div className="p-6 text-gray-600">Product not found.</div>
-  )
+    <div className="p-6 text-center text-gray-600">Product not found.</div>
+  );
 }

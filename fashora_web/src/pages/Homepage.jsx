@@ -58,7 +58,7 @@ export default function HomePage() {
       </div>
 
       {/* Product Carousel */}
-      <div className="max-w-7xl mx-auto px-4 mt-2 overflow-x-auto scrollbar-hide">
+      <div className="max-w-8xl mx-auto px-4 mt-2 overflow-x-auto scrollbar-hide">
         <div ref={carouselRef} className="flex gap-4 overflow-x-auto pb-2 scroll-smooth snap-x snap-mandatory">
           {mustHaveProducts.map((product, i) => (
             <div key={i} className="relative min-w-[220px] max-w-[220px] bg-white rounded-lg shadow border flex-shrink-0 snap-start">
@@ -141,7 +141,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="bg-[#744f28] text-white py-6 mt-12">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
           <div>
@@ -167,7 +167,7 @@ export default function HomePage() {
         <div className="text-center text-xs mt-6 border-t border-white/30 pt-4">
           &copy; {new Date().getFullYear()} Fashora. All rights reserved.
         </div>
-      </footer>
+      </footer> */}
 
       {/* Animation CSS */}
       <style>{`
