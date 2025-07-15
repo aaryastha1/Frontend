@@ -1,12 +1,18 @@
+
+
+
 import React, { useRef, useState, useEffect } from 'react';
 
 const mustHaveProducts = [
   { model: 'Just in', name: 'Basic Fitted Top', code: 'No. 1999', image: 'top1.png' },
   { model: 'Just in', name: 'Pink Cotton Shirt', code: 'No. 1405', image: 'shirt.png' },
-  { model: 'Just in', name: 'Cotton loose Pant', code: 'No. 1999', image: 'pant.png' },
+  { model: 'Just in', name: 'Cotton Loose Pant', code: 'No. 1999', image: 'pant.png' },
   { model: 'Just in', name: 'Off Shoulder Top in black', code: 'No. 1492', image: 'image4.png' },
   { model: 'Just in', name: 'tee', code: 'No. 1492', image: 'tee.png' },
   { model: 'Just in', name: 'sweater', code: 'No. 1491', image: 'image.png' },
+  { model: 'Just in', name: 'Off Shoulder Top in black', code: 'No. 1492', image: 'image4.png' },
+
+   
 ];
 
 export default function HomePage() {
@@ -59,7 +65,16 @@ export default function HomePage() {
 
       {/* Product Carousel */}
       <div className="max-w-8xl mx-auto px-4 mt-2 overflow-x-auto scrollbar-hide">
-        <div ref={carouselRef} className="flex gap-4 overflow-x-auto pb-2 scroll-smooth snap-x snap-mandatory">
+        <div
+          ref={carouselRef}
+          className="flex gap-4 overflow-x-auto pb-2 scroll-smooth snap-x snap-mandatory"
+          onWheel={(e) => {
+            if (carouselRef.current) {
+              e.preventDefault();
+              carouselRef.current.scrollLeft += e.deltaY;
+            }
+          }}
+        >
           {mustHaveProducts.map((product, i) => (
             <div key={i} className="relative min-w-[220px] max-w-[220px] bg-white rounded-lg shadow border flex-shrink-0 snap-start">
               <button className="absolute top-2 right-2 bg-white/80 rounded-full p-1 shadow hover:bg-gray-100 z-10">
@@ -81,11 +96,11 @@ export default function HomePage() {
       {/* Marquee */}
       <div className="w-full bg-[#744f28] text-white py-1.5 mt-8 overflow-hidden">
         <div className="whitespace-nowrap animate-marquee text-xs font-semibold tracking-wide">
-          TRAIN HARDER. LOOK SHARPER. GEAR THAT KEEPS UP WITH YOUR GRIND &nbsp; • &nbsp; TRAIN HARDER. LOOK SHARPER. GEAR THAT KEEPS UP WITH YOUR GRIND &nbsp; • &nbsp; TRAIN HARDER. LOOK SHARPER. GEAR THAT KEEPS UP WITH YOUR GRIND
+          TRAIN HARDER. LOOK SHARPER. GEAR THAT KEEPS UP WITH YOUR GRIND &nbsp; • &nbsp; TRAIN HARDER. LOOK SHARPER. GEAR THAT KEEPS UP WITH YOUR GRIND
         </div>
       </div>
 
-      {/* Exclusive Offer Section */}
+      {/* Sale Section */}
       <div className="w-full mt-10 px-4">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[400px] rounded-2xl overflow-hidden shadow-2xl bg-white">
           {/* Left */}
@@ -98,12 +113,7 @@ export default function HomePage() {
               <p className="text-gray-600 mb-8 text-lg max-w-md leading-relaxed">TriaFash's Best-Seller Embodies Timeless Style</p>
             </div>
             <div className="flex justify-center gap-4 mb-8">
-              {[
-                { value: timeLeft.days, label: 'Days' },
-                { value: timeLeft.hours, label: 'Hours' },
-                { value: timeLeft.minutes, label: 'Min' },
-                { value: timeLeft.seconds, label: 'Sec' },
-              ].map((item, index) => (
+              {[{ value: timeLeft.days, label: 'Days' }, { value: timeLeft.hours, label: 'Hours' }, { value: timeLeft.minutes, label: 'Min' }, { value: timeLeft.seconds, label: 'Sec' }].map((item, index) => (
                 <div key={index} className="flex flex-col items-center">
                   <div className="bg-white rounded-xl shadow-lg p-3 min-w-[60px] border border-[#744f28]/10">
                     <span className="text-2xl lg:text-3xl font-bold text-[#744f28] block text-center">{item.value.toString().padStart(2, '0')}</span>
@@ -141,35 +151,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Footer
-      <footer className="bg-[#744f28] text-white py-6 mt-12">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-          <div>
-            <h3 className="font-semibold mb-2">Fashora</h3>
-            <p>Your one-stop destination for timeless girls' fashion. Trendy, chic, and always affordable.</p>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-2">Quick Links</h3>
-            <ul className="space-y-1">
-              <li><a href="#" className="hover:underline">Home</a></li>
-              <li><a href="#" className="hover:underline">Tops</a></li>
-              <li><a href="#" className="hover:underline">Dresses</a></li>
-              <li><a href="#" className="hover:underline">Knitwear</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-2">Contact</h3>
-            <p>Email: support@fashora.com</p>
-            <p>Phone: +977 9800000000</p>
-            <p>Location: Kathmandu, Nepal</p>
-          </div>
-        </div>
-        <div className="text-center text-xs mt-6 border-t border-white/30 pt-4">
-          &copy; {new Date().getFullYear()} Fashora. All rights reserved.
-        </div>
-      </footer> */}
-
-      {/* Animation CSS */}
       <style>{`
         .animate-marquee {
           display: inline-block;
@@ -185,3 +166,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+

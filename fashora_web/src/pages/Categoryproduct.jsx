@@ -1,71 +1,3 @@
-
-// import React, { useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { useProductsByCategory } from '../hooks/useCategoryProduct';
-// import { FaRegHeart, FaHeart } from 'react-icons/fa'; // Font Awesome Heart Icons
-
-// export default function CategoryProductPage() {
-//   const { categoryName } = useParams();
-//   const { data: products, isLoading, error } = useProductsByCategory(categoryName);
-
-//   const [favorites, setFavorites] = useState([]);
-
-//   const toggleFavorite = (productId) => {
-//     setFavorites((prev) =>
-//       prev.includes(productId)
-//         ? prev.filter((id) => id !== productId)
-//         : [...prev, productId]
-//     );
-//   };
-
-//   if (isLoading) return <p className="text-center py-10">Loading products...</p>;
-//   if (error) return <p className="text-center text-red-500 py-10">Failed to load products.</p>;
-
-//   return (
-//     <div className="max-w-7xl mx-auto px-4 py-10">
-//       <h2 className="text-2xl font-bold mb-6 capitalize">{categoryName} Collection</h2>
-
-//       {products?.length === 0 ? (
-//         <p>No products found.</p>
-//       ) : (
-//         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-//           {products.map((product) => (
-//             <div
-//               key={product._id}
-//               className="border rounded-lg shadow hover:shadow-md transition bg-white relative"
-//             >
-//               {/* Favorite Icon */}
-//                 <button
-//                 onClick={() => toggleFavorite(product._id)}
-//                 className="absolute top-2 right-2 text-red-500 text-base p-1"
-//                 >
-//                 {favorites.includes(product._id) ? <FaHeart className="w-4 h-4" /> : <FaRegHeart className="w-4 h-4" />}
-//                 </button>
-
-
-//               <img
-//                 src={`http://localhost:5006/uploads/${product.image}`}
-//                 alt={product.name}
-//                 className="w-full h-48 object-cover rounded-t-lg"
-//               />
-
-//               <div className="p-3">
-//                 <h3 className="font-semibold text-gray-800">{product.name}</h3>
-//                 <p className="text-sm text-gray-600 mb-1">Price: Rs. {product.price}</p>
-//                 {product.description && (
-//                   <p className="text-sm text-gray-500 line-clamp-2">{product.description}</p>
-//                 )}
-
-                
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProductsByCategory } from '../hooks/useCategoryProduct';
@@ -84,15 +16,21 @@ export default function CategoryProductPage() {
     );
   };
 
+  const title = `${categoryName} Collection`;
+  const subtitle = `Discover our latest collection of stylish ${categoryName.toLowerCase()}.`;
+
   if (isLoading) return <p className="text-center py-10">Loading products...</p>;
   if (error) return <p className="text-center text-red-500 py-10">Failed to load products.</p>;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-      <h2 className="text-2xl font-bold mb-6 capitalize">{categoryName} Collection</h2>
+      <div className="mb-8 text-center">
+        <h2 className="text-3xl font-bold capitalize text-gray-900">{title}</h2>
+        <p className="text-sm text-gray-500 mt-2">{subtitle}</p>
+      </div>
 
       {products?.length === 0 ? (
-        <p>No products found.</p>
+        <p className="text-center text-gray-600">No products found.</p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {products.map((product) => (
