@@ -15,7 +15,10 @@ export default function UpdateProduct() {
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Product name is required"),
-    price: Yup.number().required("Price is required").positive(),
+    price: Yup.string()
+  .required("Price is required"),
+ 
+
     categoryId: Yup.string().required("Category is required"),
     description: Yup.string(),
     image: Yup.mixed()
@@ -77,7 +80,7 @@ export default function UpdateProduct() {
             <label className="block text-gray-700 font-medium mb-2">Price (Rs)</label>
             <input
               name="price"
-              type="number"
+              type="text"
               onChange={formik.handleChange}
               value={formik.values.price}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"

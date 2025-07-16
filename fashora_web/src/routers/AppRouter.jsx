@@ -33,6 +33,7 @@ import CategoryProductPage from '../pages/Categoryproduct';
 
 
 
+
 export default function AppRouter() {
   return (
     <AuthContextProvider>
@@ -48,6 +49,7 @@ export default function AppRouter() {
 
               {/* Category route */}
          <Route path="/category/:categoryName" element={<CategoryProductPage />} />
+         
 
             
          

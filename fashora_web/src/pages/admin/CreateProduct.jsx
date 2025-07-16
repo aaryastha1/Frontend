@@ -182,7 +182,7 @@ export default function CreateProduct() {
                 Price (NPR)
               </label>
               <input
-                type="number"
+                type="number/test"
                 name="price"
                 placeholder="Enter price..."
                 className="w-full rounded-md border border-gray-300 px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
