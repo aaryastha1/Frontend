@@ -104,7 +104,6 @@
 
 // export default LoginForm;
 
-
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -130,7 +129,7 @@ const LoginForm = () => {
         onSuccess: (res) => {
           const userRole = res?.data?.role;
 
-          // toast.success('Login successful!');
+          toast.success('Login successful!', { duration: 3000 });
 
           setTimeout(() => {
             if (userRole === 'admin') {
@@ -138,10 +137,10 @@ const LoginForm = () => {
             } else {
               navigate('/home', { state: { showLoginToast: true } });
             }
-          }, 1500);
+          }, );
         },
         onError: () => {
-          toast.error('Login failed. Please try again.');
+          toast.error('Login failed. Please try again.', { duration: 3000 });
         },
       });
     },

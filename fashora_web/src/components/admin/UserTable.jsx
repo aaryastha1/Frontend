@@ -131,21 +131,21 @@ export default function UserTable() {
               </div> */}
                   <div className="flex justify-center gap-2">
                     <Link to={`/admin/user/${user._id}`}>
-                      <button
+                      {/* <button
                         className="group bg-blue-100 hover:bg-blue-200 text-blue-700 p-2 rounded-full transition duration-200 shadow-sm"
                         title="View"
                       >
                         <Eye className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                      </button>
+                      </button> */}
                     </Link>
 
                     <Link to={`/admin/user/${user._id}/edit`}>
-                      <button
+                      {/* <button
                         className="group bg-yellow-100 hover:bg-yellow-200 text-yellow-700 p-2 rounded-full transition duration-200 shadow-sm"
                         title="Edit"
                       >
                         <Pencil className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                      </button>
+                      </button> */}
                     </Link>
 
                     <button
