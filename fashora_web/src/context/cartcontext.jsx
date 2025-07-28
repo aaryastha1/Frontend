@@ -172,6 +172,7 @@ export const CartProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Remove from cart failed', error);
+      
     }
   };
 
