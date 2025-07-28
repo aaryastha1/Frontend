@@ -56,4 +56,5 @@ export const updateOneProductApi = (id, data) =>
 
 
 export const deleteOneProductApi = (id) =>
+    
     axios.delete("/admin/product/" + id)
