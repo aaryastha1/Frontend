@@ -237,9 +237,13 @@ export default function HomePage() {
             <p className="text-white text-sm sm:text-base md:text-lg mb-4 max-w-md">
               Discover the latest trends and elevate your style with fresh spring arrivals.
             </p>
-            <button className="bg-white text-black font-semibold px-6 py-2 rounded hover:bg-gray-200 transition">
-              Explore Now
-            </button>
+           <button
+            onClick={() => navigate('/category/Tops')}
+            className="bg-white text-black font-semibold px-6 py-2 rounded hover:bg-gray-200 transition"
+          >
+            Explore Now
+          </button>
+
           </div>
         </div>
 
