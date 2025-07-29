@@ -90,6 +90,9 @@ export default function ProfilePage() {
                 label="Full Name"
                 value={formData.name}
                 onChange={handleChange}
+
+
+                
               />
               <FormField
                 name="email"
