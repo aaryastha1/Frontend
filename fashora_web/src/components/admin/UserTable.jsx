@@ -74,9 +74,9 @@ export default function UserTable() {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-[#222740]">User Table</h2>
         <Link to="/admin/user/create">
-          <button className="bg-[#222740] text-white px-4 py-2 rounded-lg hover:bg-[#1a1d33] transition-colors">
+          {/* <button className="bg-[#222740] text-white px-4 py-2 rounded-lg hover:bg-[#1a1d33] transition-colors">
             + Create User
-          </button>
+          </button> */}
         </Link>
       </div>
 
@@ -99,13 +99,13 @@ export default function UserTable() {
                 <td className="px-4 py-3">
                   <img
                     src={getBackendImageUrl(user.filepath)}
-                    alt={user.firstName || "User"}
+                    alt={user.name || "User"}
                     className="w-12 h-12 rounded-full object-cover border border-[#EFD365]"
                   />
                 </td>
 
                 <td className="px-4 py-3 font-medium">
-                  {user.firstName} {user.lastName}
+                  {user.name} 
                 </td>
 
                 <td className="px-4 py-3 text-gray-600">{user.email}</td>
