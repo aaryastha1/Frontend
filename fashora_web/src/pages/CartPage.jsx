@@ -129,7 +129,7 @@ export default function CartPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 bg-gray-50 min-h-screen">
       <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
-        🛒 Your Shopping Cart
+        🛒 My Shopping Cart
       </h2>
 
       {cartItems.length === 0 ? (

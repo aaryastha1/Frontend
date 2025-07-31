@@ -94,7 +94,7 @@ export default function FavoritesPage() {
       <Toaster position="top-right" reverseOrder={false} />
 
       <h2 className="text-2xl font-bold capitalize text-gray-900 flex items-center justify-center mb-1 mt-[-8px] font-handwriting">
-        Your Favorites
+        My Wishlist
       </h2>
       <p className="text-sm text-gray-500 text-center">
         Browse all the products you’ve added to your favorites.
